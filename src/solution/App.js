@@ -6,6 +6,8 @@ function App() {
   const [firstNameValid, setfirstNameValid] = useState(false);
   const [firstNameValue, setFirstNameValue] = useState("");
   const [nameList, setNameList] = useState();
+  const [task, setTask] = useState('');
+  const [taskList, setTaskList] = useState([]);
 
   return (
     <>
@@ -48,6 +50,60 @@ function App() {
           <li key="1">{nameList}</li>
         </ul>
       </div>
+      <div>
+        <h1>Task list</h1>
+        <form onSubmit={(e) => {
+          e.preventDefault(); 
+          setTaskList([task, ...taskList])
+        }}>
+        <input 
+          onChange={(e) => setTask(e.target.value)}
+          id="task"
+          />
+          <button>add</button>
+          </form>
+        <ul>
+            {taskList.map((item) => 
+            <li key={item}>{item}</li>
+            )}
+        </ul>
+      </div>
+    </>
+  );
+}
+  const [taskList, setTaskList] = useState([]);
+  const [userInput, setUserInput] = useState('');
+
+  console.log(taskList);
+
+  return (
+    <>
+      <h1 style={{textAlign: 'center'}}>Task list</h1>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        setTaskList([...taskList, userInput]);
+      }}>
+        <label htmlFor="task">Add a task</label>
+        <input 
+          id="task"
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+        <button>Add</button>
+      </form>
+      <button onClick={() => {
+        setTaskList(taskList.sort((a, b) => a - b))
+      }}>Sort alphabetically</button>
+      <ul>
+        {taskList.map((item) => 
+          <li key={item}>
+            {item}
+            <button onClick={() => {
+              setTaskList(taskList.filter((index) => index !== item));
+            }}>x</button>
+          </li>
+        )}
+      </ul>
+
     </>
   );
 }
